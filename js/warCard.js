@@ -7,6 +7,7 @@ var firstRun = true;
 var gameover = false;
 var timer;
 var r = 0;
+var round = 1;
 var fightButton = document.getElementById("btnBattle");
 var fightButton10 = document.getElementById("btnBattle10");
 var fightButton50 = document.getElementById("btnBattle50");
@@ -18,7 +19,9 @@ var s2 = document.querySelector("#player2 .score");
 
 // event listeners
 
-fightButton.addEventListener("click", battle);
+fightButton.addEventListener("click", function () {
+    rounds(1);
+});
 fightButton10.addEventListener("click", function () {
     rounds(10);
 });
@@ -36,6 +39,7 @@ function setNewGame() {
     gameover = false;
     timer;
     r = 0;
+    round = 1;
     outputMessage("Click Fight to Start Game");
     p1.innerHTML = "";
     p2.innerHTML = "";
@@ -44,6 +48,7 @@ function setNewGame() {
 }
 
 function rounds(a) {
+    window.clearInterval(timer);
     r = a;
     timer = setInterval(function () {
         battle();
@@ -64,7 +69,7 @@ function battle() {
         shuffleArray(cards);
         dealCards(cards);
     }
-    attack();
+    attack();    
 }
 
 function attack() {
@@ -77,8 +82,9 @@ function attack() {
         checkWinner(card1, card2, pot);
         s1.innerHTML = players[0].length;
         s2.innerHTML = players[1].length;
+        round++;
     } else {
-        outputMessage("Game Over");
+        outputMessage('Round ' + round + ': Game Over');        
     }
 }
 
@@ -97,14 +103,14 @@ function checkWinner(card1, card2, pot) {
         return;
     }
     if (card1.cardValue > card2.cardValue) {
-        outputMessage("Player 1 wins");
+        outputMessage('Round ' + round + ': Player 1 wins');
         players[0] = players[0].concat(pot);
     } else if (card1.cardValue < card2.cardValue) {
-        outputMessage("Player 2 wins");
+        outputMessage('Round ' + round + ': Player 2 wins');
         players[1] = players[1].concat(pot);
     } else {
         battlemode(pot);
-        outputMessage("Battle Mode");
+        outputMessage('Round ' + round + ': Battle Mode');
     }
 }
 
