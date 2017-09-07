@@ -9,8 +9,7 @@ var timer;
 var r = 0;
 var round = 1;
 var fightButton = document.getElementById("btnBattle");
-var fightButton10 = document.getElementById("btnBattle10");
-var fightButton50 = document.getElementById("btnBattle50");
+var fightButtonInput = document.getElementById("btnBattleInput");
 var newGameButton = document.getElementById("newGame");
 var p1 = document.querySelector("#player1 .hand");
 var p2 = document.querySelector("#player2 .hand");
@@ -22,11 +21,9 @@ var s2 = document.querySelector("#player2 .score");
 fightButton.addEventListener("click", function () {
     rounds(1);
 });
-fightButton10.addEventListener("click", function () {
-    rounds(10);
-});
-fightButton50.addEventListener("click", function () {
-    rounds(50);
+fightButtonInput.addEventListener("click", function () {
+    var inputRounds = document.getElementById('roundInput').value;
+    rounds(inputRounds);
 });
 newGameButton.addEventListener("click", setNewGame);
 
@@ -52,13 +49,13 @@ function rounds(a) {
     r = a;
     timer = setInterval(function () {
         battle();
-    }, 100);
+    }, 10);
 }
 
 function battle() {
-    if (timer) {
+    if (timer && !gameover) {
         r--;
-        outputMessage("Rounds left " + r);
+        outputTechMessage("Rounds left " + r);
         if (r < 1) {
             window.clearInterval(timer);
         }
@@ -78,7 +75,7 @@ function attack() {
         var card2 = players[1].shift();
         var pot = [card1, card2];
         p1.innerHTML = showCard(card1, 0);
-        p2.innerHTML = showCard(card2, 0);
+        p2.innerHTML = showCard(card2, 0);        
         checkWinner(card1, card2, pot);
         s1.innerHTML = players[0].length;
         s2.innerHTML = players[1].length;
@@ -92,8 +89,12 @@ function outputMessage(message) {
     document.getElementById("message").innerHTML = message;
 }
 
+function outputTechMessage(message) {
+    document.getElementById("techMessage").innerHTML = message;
+}
+
 function checkWinner(card1, card2, pot) {
-    if ((players[0].length <= 4) || (players[1].length <= 4)) {
+    if ((players[0].length < 4) || (players[1].length < 4)) {
         if (players[0].length <= 4) {
             players[1] = players[1].concat(pot);
         } else {
@@ -137,7 +138,7 @@ function battlemode(pot) {
 function showCard(c, p, i) {
     var move = p * 40;
     if (i == 0 || i == 1 || i == 2) {
-        var bCard = '<div class="icard blank" style="left:' + move + 'px">';        
+        var bCard = '<div class="icard blank" style="left:' + move + 'px">';
     } else {
         var bCard = '<div class="icard ' + c.suit + ' " style="left:' + move + 'px">';
         bCard += '<div class="cardTop suit">' + c.num + '<br></div>';
