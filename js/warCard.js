@@ -69,7 +69,7 @@ function battle() {
         shuffleArray(cards);
         dealCards(cards);
     }
-    attack();    
+    attack();
 }
 
 function attack() {
@@ -84,7 +84,7 @@ function attack() {
         s2.innerHTML = players[1].length;
         round++;
     } else {
-        outputMessage('Round ' + round + ': Game Over');        
+        outputMessage('Round ' + round + ': Game Over');
     }
 }
 
@@ -123,23 +123,27 @@ function battlemode(pot) {
         for (var i = 0; i < 4; i++) {
             card1 = players[0].shift();
             pot = pot.concat(card1);
-            p1.innerHTML += showCard(card1, (pos + i));
+            p1.innerHTML += showCard(card1, (pos + i), i);
         }
         for (var i = 0; i < 4; i++) {
             card2 = players[1].shift();
             pot = pot.concat(card2);
-            p2.innerHTML += showCard(card2, (pos + i));
+            p2.innerHTML += showCard(card2, (pos + i), i);
         }
         checkWinner(card1, card2, pot);
     }
 }
 
-function showCard(c, p) {
+function showCard(c, p, i) {
     var move = p * 40;
-    var bCard = '<div class="icard ' + c.suit + ' " style="left:' + move + 'px">';
-    bCard += '<div class="cardTop suit">' + c.num + '<br></div>';
-    bCard += '<div class="cardMid suit"></div>';
-    bCard += '<div class="cardBottom suit">' + c.num + '<br></div></div>';
+    if (i == 0 || i == 1 || i == 2) {
+        var bCard = '<div class="icard blank" style="left:' + move + 'px">';        
+    } else {
+        var bCard = '<div class="icard ' + c.suit + ' " style="left:' + move + 'px">';
+        bCard += '<div class="cardTop suit">' + c.num + '<br></div>';
+        bCard += '<div class="cardMid suit"></div>';
+        bCard += '<div class="cardBottom suit">' + c.num + '<br></div></div>';
+    }
     return bCard;
 }
 

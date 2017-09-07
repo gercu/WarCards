@@ -11,6 +11,10 @@
     left:0;
 }
 
+.icard.blank{
+    background-color: gray;
+}
+
 .cardTop{
     font-size:2em;
     height:40px;
