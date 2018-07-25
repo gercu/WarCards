@@ -1,4 +1,4 @@
 # WarCards
 
 Simple War Cardgame simulator.
-Live version: http://gercu.ayz.pl/warcards/
+Live version: http://bog.ayz.pl/warcards/
